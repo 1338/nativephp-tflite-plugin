@@ -13,6 +13,11 @@
   "extra": {
     "nativephp": {
       "manifest": "nativephp.json"
+    },
+    "laravel": {
+        "providers": [
+            "OneThreeThreeEight\\NativephpTflite\\TfliteServiceProvider"
+        ]
     }
-  }
+    }
 }
