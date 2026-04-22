@@ -1,0 +1,89 @@
+{
+  "namespace": "OneThreeThreeEight\\NativephpTflite",
+  "bridge_functions": [
+    {
+      "name": "Tflite.LoadModel",
+      "ios": "TfliteFunctions.LoadModel",
+      "android": "com.onethreethreeeight.tflite.TfliteFunctions.LoadModel",
+      "description": "Load TFLite model from assets"
+    },
+    {
+      "name": "Tflite.StartListening",
+      "ios": "TfliteFunctions.StartListening",
+      "android": "com.onethreethreeeight.tflite.TfliteFunctions.StartListening",
+      "description": "Start continuous listening/inference"
+    },
+    {
+      "name": "Tflite.StopListening",
+      "ios": "TfliteFunctions.StopListening",
+      "android": "com.onethreethreeeight.tflite.TfliteFunctions.StopListening",
+      "description": "Stop listening"
+    },
+    {
+      "name": "Tflite.SetSensitivity",
+      "ios": "TfliteFunctions.SetSensitivity",
+      "android": "com.onethreethreeeight.tflite.TfliteFunctions.SetSensitivity",
+      "description": "Set detection sensitivity, 0.0 - 1.0"
+    },
+    {
+      "name": "Tflite.GetVersion",
+      "ios": "TfliteFunctions.GetVersion",
+      "android": "com.onethreethreeeight.tflite.TfliteFunctions.GetVersion",
+      "description": "Get plugin version"
+    }
+    ,
+    {
+      "name": "Tflite.AddModel",
+      "ios": "TfliteFunctions.AddModel",
+      "android": "com.onethreethreeeight.tflite.TfliteFunctions.AddModel",
+      "description": "Add a TFLite model file (base64) to app storage"
+    },
+    {
+      "name": "Tflite.ListModels",
+      "ios": "TfliteFunctions.ListModels",
+      "android": "com.onethreethreeeight.tflite.TfliteFunctions.ListModels",
+      "description": "List stored TFLite models"
+    },
+    {
+      "name": "Tflite.DeleteModel",
+      "ios": "TfliteFunctions.DeleteModel",
+      "android": "com.onethreethreeeight.tflite.TfliteFunctions.DeleteModel",
+      "description": "Delete a stored TFLite model"
+    },
+    {
+      "name": "Tflite.LoadModelFromFile",
+      "ios": "TfliteFunctions.LoadModelFromFile",
+      "android": "com.onethreethreeeight.tflite.TfliteFunctions.LoadModelFromFile",
+      "description": "Load a model from internal storage path"
+    },
+    {
+      "name": "Tflite.CopyAssetToStorage",
+      "ios": "TfliteFunctions.CopyAssetToStorage",
+      "android": "com.onethreethreeeight.tflite.TfliteFunctions.CopyAssetToStorage",
+      "description": "Copy an embedded asset model to app storage"
+    }
+    ,
+    {
+      "name": "Tflite.SetPreprocessing",
+      "ios": "TfliteFunctions.SetPreprocessing",
+      "android": "com.onethreethreeeight.tflite.TfliteFunctions.SetPreprocessing",
+      "description": "Set preprocessing mode: none | auto | logmel | mfcc"
+    }
+  ],
+  "events": [
+    "OneThreeThreeEight\\NativephpTflite\\Events\\WakewordDetected"
+  ],
+  "android": {
+    "permissions": [
+      "android.permission.RECORD_AUDIO"
+    ],
+    "dependencies": {
+      "implementation": [
+        "org.tensorflow:tensorflow-lite:2.12.0"
+      ]
+    }
+  },
+  "ios": {
+    "min_version": "12.0"
+  }
+}
