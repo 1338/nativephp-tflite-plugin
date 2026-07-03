@@ -1,5 +1,7 @@
 # NativePHP TFLite
 
+[![Packagist Version](https://img.shields.io/packagist/v/1338/nativephp-tflite.svg)](https://packagist.org/packages/1338/nativephp-tflite)
+
 NativePHP plugin for loading TensorFlow Lite models and running on-device inference from PHP or JavaScript.
 
 This project is intentionally scoped as a small TFLite bridge, not a wakeword engine. Android and iOS do not provide reliable custom wakeword support in the way this project originally explored, so the useful surface is model storage, model metadata, and direct inference.
@@ -20,27 +22,16 @@ This project is intentionally scoped as a small TFLite bridge, not a wakeword en
 
 ## Install
 
-Require the plugin from your NativePHP app. During local development, use a path repository:
-
-```json
-{
-  "repositories": [
-    {
-      "type": "path",
-      "url": "../nativephp-tflite-plugin"
-    }
-  ]
-}
-```
-
-Then require and register:
+Require and register the plugin from your NativePHP mobile app:
 
 ```bash
-composer require 1338/nativephp-tflite
+composer require 1338/nativephp-tflite:dev-main
 php artisan native:plugin:register 1338/nativephp-tflite
 php artisan native:plugin:validate
 php artisan native:install --force
 ```
+
+Use `dev-main` until the first stable package tag is published.
 
 ## PHP Usage
 
