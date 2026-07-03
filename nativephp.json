@@ -1,0 +1,69 @@
+{
+  "namespace": "OneThreeThreeEight\\NativephpTflite",
+  "bridge_functions": [
+    {
+      "name": "Tflite.LoadModel",
+      "ios": "TfliteFunctions.LoadModel",
+      "android": "com.onethreethreeeight.tflite.TfliteFunctions.LoadModel",
+      "description": "Load TFLite model from assets"
+    },
+    {
+      "name": "Tflite.Run",
+      "ios": "TfliteFunctions.Run",
+      "android": "com.onethreethreeeight.tflite.TfliteFunctions.Run",
+      "description": "Run inference against the loaded model"
+    },
+    {
+      "name": "Tflite.ModelInfo",
+      "ios": "TfliteFunctions.ModelInfo",
+      "android": "com.onethreethreeeight.tflite.TfliteFunctions.ModelInfo",
+      "description": "Get loaded model input/output metadata"
+    },
+    {
+      "name": "Tflite.GetVersion",
+      "ios": "TfliteFunctions.GetVersion",
+      "android": "com.onethreethreeeight.tflite.TfliteFunctions.GetVersion",
+      "description": "Get plugin version"
+    },
+    {
+      "name": "Tflite.AddModel",
+      "ios": "TfliteFunctions.AddModel",
+      "android": "com.onethreethreeeight.tflite.TfliteFunctions.AddModel",
+      "description": "Add a TFLite model file (base64) to app storage"
+    },
+    {
+      "name": "Tflite.ListModels",
+      "ios": "TfliteFunctions.ListModels",
+      "android": "com.onethreethreeeight.tflite.TfliteFunctions.ListModels",
+      "description": "List stored TFLite models"
+    },
+    {
+      "name": "Tflite.DeleteModel",
+      "ios": "TfliteFunctions.DeleteModel",
+      "android": "com.onethreethreeeight.tflite.TfliteFunctions.DeleteModel",
+      "description": "Delete a stored TFLite model"
+    },
+    {
+      "name": "Tflite.LoadModelFromFile",
+      "ios": "TfliteFunctions.LoadModelFromFile",
+      "android": "com.onethreethreeeight.tflite.TfliteFunctions.LoadModelFromFile",
+      "description": "Load a model from internal storage path"
+    },
+    {
+      "name": "Tflite.CopyAssetToStorage",
+      "ios": "TfliteFunctions.CopyAssetToStorage",
+      "android": "com.onethreethreeeight.tflite.TfliteFunctions.CopyAssetToStorage",
+      "description": "Copy an embedded asset model to app storage"
+    }
+  ],
+  "android": {
+    "dependencies": {
+      "implementation": [
+        "org.tensorflow:tensorflow-lite:2.12.0"
+      ]
+    }
+  },
+  "ios": {
+    "min_version": "12.0"
+  }
+}
