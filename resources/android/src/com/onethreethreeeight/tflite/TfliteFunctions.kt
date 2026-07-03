@@ -9,10 +9,10 @@ object TfliteFunctions {
     class LoadModel(private val activity: FragmentActivity) : BridgeFunction {
         override fun execute(parameters: Map<String, Any>): Map<String, Any> {
             try {
-                val assetName = parameters["asset"] as? String ?: return BridgeResponse.error("missing_asset")
+                val assetName = parameters["asset"] as? String ?: return error("MISSING_ASSET", "Missing asset parameter")
                 return BridgeResponse.success(TfliteEngine.loadFromAsset(activity.assets, assetName))
             } catch (e: Exception) {
-                return BridgeResponse.error("failed_to_load_model: ${e.message}")
+                return error("FAILED_TO_LOAD_MODEL", e.message)
             }
         }
     }
@@ -24,7 +24,7 @@ object TfliteFunctions {
                 val outputIndex = (parameters["outputIndex"] as? Number)?.toInt() ?: 0
                 return BridgeResponse.success(TfliteEngine.run(input, outputIndex))
             } catch (e: Exception) {
-                return BridgeResponse.error("inference_failed: ${e.message}")
+                return error("INFERENCE_FAILED", e.message)
             }
         }
     }
@@ -44,8 +44,8 @@ object TfliteFunctions {
     class AddModel(private val activity: FragmentActivity) : BridgeFunction {
         override fun execute(parameters: Map<String, Any>): Map<String, Any> {
             try {
-                val name = parameters["name"] as? String ?: return BridgeResponse.error("missing_name")
-                val data = parameters["data"] as? String ?: return BridgeResponse.error("missing_data")
+                val name = parameters["name"] as? String ?: return error("MISSING_NAME", "Missing name parameter")
+                val data = parameters["data"] as? String ?: return error("MISSING_DATA", "Missing data parameter")
                 val modelsDir = File(activity.filesDir, "tflite_models")
                 if (!modelsDir.exists()) modelsDir.mkdirs()
                 val outFile = File(modelsDir, sanitizeFilename(name))
@@ -53,7 +53,7 @@ object TfliteFunctions {
                 outFile.writeBytes(decoded)
                 return BridgeResponse.success(modelFileInfo(outFile))
             } catch (e: Exception) {
-                return BridgeResponse.error("add_model_failed: ${e.message}")
+                return error("ADD_MODEL_FAILED", e.message)
             }
         }
     }
@@ -68,7 +68,7 @@ object TfliteFunctions {
                     ?: listOf<Map<String, Any>>()
                 return BridgeResponse.success(mapOf("models" to list))
             } catch (e: Exception) {
-                return BridgeResponse.error("list_models_failed: ${e.message}")
+                return error("LIST_MODELS_FAILED", e.message)
             }
         }
     }
@@ -76,13 +76,13 @@ object TfliteFunctions {
     class DeleteModel(private val activity: FragmentActivity) : BridgeFunction {
         override fun execute(parameters: Map<String, Any>): Map<String, Any> {
             try {
-                val name = parameters["name"] as? String ?: return BridgeResponse.error("missing_name")
+                val name = parameters["name"] as? String ?: return error("MISSING_NAME", "Missing name parameter")
                 val modelsDir = File(activity.filesDir, "tflite_models")
                 val target = File(modelsDir, sanitizeFilename(name))
                 val deleted = if (target.exists()) target.delete() else false
                 return BridgeResponse.success(mapOf("deleted" to deleted))
             } catch (e: Exception) {
-                return BridgeResponse.error("delete_model_failed: ${e.message}")
+                return error("DELETE_MODEL_FAILED", e.message)
             }
         }
     }
@@ -90,13 +90,13 @@ object TfliteFunctions {
     class LoadModelFromFile(private val activity: FragmentActivity) : BridgeFunction {
         override fun execute(parameters: Map<String, Any>): Map<String, Any> {
             try {
-                val filename = parameters["filename"] as? String ?: return BridgeResponse.error("missing_filename")
+                val filename = parameters["filename"] as? String ?: return error("MISSING_FILENAME", "Missing filename parameter")
                 val modelsDir = File(activity.filesDir, "tflite_models")
                 val target = File(modelsDir, sanitizeFilename(filename))
-                if (!target.exists()) return BridgeResponse.error("file_not_found")
+                if (!target.exists()) return error("FILE_NOT_FOUND", "Model file not found")
                 return BridgeResponse.success(TfliteEngine.loadFromFile(target))
             } catch (e: Exception) {
-                return BridgeResponse.error("load_model_failed: ${e.message}")
+                return error("LOAD_MODEL_FAILED", e.message)
             }
         }
     }
@@ -104,7 +104,7 @@ object TfliteFunctions {
     class CopyAssetToStorage(private val activity: FragmentActivity) : BridgeFunction {
         override fun execute(parameters: Map<String, Any>): Map<String, Any> {
             try {
-                val asset = parameters["asset"] as? String ?: return BridgeResponse.error("missing_asset")
+                val asset = parameters["asset"] as? String ?: return error("MISSING_ASSET", "Missing asset parameter")
                 val targetName = parameters["target"] as? String ?: asset
                 val modelsDir = File(activity.filesDir, "tflite_models")
                 if (!modelsDir.exists()) modelsDir.mkdirs()
@@ -115,9 +115,13 @@ object TfliteFunctions {
                 outFile.writeBytes(bytes)
                 return BridgeResponse.success(modelFileInfo(outFile))
             } catch (e: Exception) {
-                return BridgeResponse.error("copy_asset_failed: ${e.message}")
+                return error("COPY_ASSET_FAILED", e.message)
             }
         }
+    }
+
+    private fun error(code: String, message: String?): Map<String, Any> {
+        return BridgeResponse.error(code, message ?: "Unknown error")
     }
 
     private fun sanitizeFilename(name: String): String {
